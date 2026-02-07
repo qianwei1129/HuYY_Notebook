@@ -1,0 +1,353 @@
+\documentclass[UTF8,12pt]{article} % 12pt 为字号大小
+\usepackage{amssymb,amsfonts,amsmath,amsthm}
+\usepackage{times}
+\usepackage{graphicx} % 插图
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{placeins} % 防止浮动
+%----------
+% 插入代码的格式定义
+% 参考 https://www.latexstudio.net/archives/5900.html
+%----------
+\usepackage{listings}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=none,                                          % 不显示背景边框
+ backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+%----------
+% 算法伪代码
+% https://blog.csdn.net/lwb102063/article/details/53046265
+%----------
+\usepackage{algorithm}  
+\usepackage{algpseudocode}  
+\usepackage{amsmath}  
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}  % Use Input in the format of Algorithm  
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm  
+
+%----------
+% 字体定义
+%----------
+\setCJKmainfont[
+    BoldFont = {Noto Sans CJK SC Bold},
+    ItalicFont = {AR PL UKai CN}
+]{Noto Serif CJK SC}
+
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}  % 宋体
+\setCJKfamilyfont{zhhei}{Noto Sans CJK SC}    % 黑体
+\setCJKfamilyfont{zhkai}{AR PL UKai CN}      % 楷体
+\setCJKfamilyfont{zhfs}{AR PL UMing CN}      % 仿宋（明体替代）
+\setCJKfamilyfont{zhli}{Noto Sans CJK SC}    % 隶书（黑体替代）
+\setCJKfamilyfont{zhyou}{Noto Sans CJK SC}   % 圆体（黑体替代）
+
+\newcommand*{\songti}{\CJKfamily{zhsong}} % 宋体
+\newcommand*{\heiti}{\CJKfamily{zhhei}}   % 黑体
+\newcommand*{\kaiti}{\CJKfamily{zhkai}}  % 楷体
+\newcommand*{\fangsong}{\CJKfamily{zhfs}} % 仿宋
+\newcommand*{\lishu}{\CJKfamily{zhli}}    % 隶书
+\newcommand*{\yuanti}{\CJKfamily{zhyou}} % 圆体
+
+%----------
+% 版面设置
+%----------
+%首段缩进
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+%行距
+\renewcommand{\baselinestretch}{1.25} % 1.25倍行距
+%页边距
+\usepackage[a4paper]{geometry}
+\geometry{verbose,
+  tmargin=2cm,% 上边距
+  bmargin=2cm,% 下边距
+  lmargin=2cm,% 左边距
+  rmargin=2cm % 右边距
+}
+
+% ----------
+% 多级标题格式在此设置
+% https://zhuanlan.zhihu.com/p/32712209
+% \titleformat{command}[shape]%定义标题类型和标题样式，字体
+% {format}%定义标题格式:字号（大小），加粗，斜体
+% {label}%定义标题的标签，即标题的标号等
+% {sep}%定义标题和标号之间的水平距离
+% {before-code}%定义标题前的内容
+% [after-code]%定义标题后的内容
+% ----------
+\usepackage{titlesec} %自定义多级标题格式的宏包
+% 三级标题
+% 4
+\titleformat{\section}[block]{\large \bfseries}{\arabic{section}}{1em}{}[]
+% 4.1
+\titleformat{\subsection}[block]{\normalsize \bfseries}{\arabic{section}.\arabic{subsection}}{1em}{}[]
+% 4.1.1
+\titleformat{\subsubsection}[block]{\small \mdseries}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}{1em}{}[]
+\titleformat{\paragraph}[block]{\footnotesize \bfseries}{[\arabic{paragraph}]}{1em}{}[]
+
+
+%----------
+% 其他宏包
+%----------
+%图形相关
+\usepackage[x11names]{xcolor} % must before tikz, x11names defines RoyalBlue3
+\usepackage{graphicx}
+\usepackage{pstricks,pst-plot,pst-eps}
+\usepackage{subfig}
+\def\pgfsysdriver{pgfsys-dvipdfmx.def} % put before tikz
+\usepackage{tikz}
+
+%原文照排
+\usepackage{verbatim}
+
+%链接的格式
+\usepackage[colorlinks,linkcolor=red]{hyperref}
+%表格
+\usepackage{tabularx}
+
+%==========
+% 正文部分
+%==========
+
+\begin{document}
+
+% \kaiti 是楷体，参见上面的字体设置
+\title{\bf{\kaiti 中医证型分类模型的构建}}
+\author{姓名:胡屹莹\hspace{1cm}时间:2026.1.31}
+\date{}
+\maketitle
+
+\abstract{
+本文主要针对筛选后的临床数据构建中医证型分类模型，
+}
+\paragraph{\bf{ \kaiti 关键词：智能中医，机器学习，深度学习，}}
+\paragraph{\\}
+
+\section{介绍(Introduction)}
+\subsection{背景(Background)}
+
+\subsection{任务(Main Task)}
+针对259个病例样本，分别使用传统机器学习以及神经网络进行模型构建，
+首先是传统机器学习，使用随机森林和KNN算法建模，构建中医证型分类模型，
+并使用五折交叉验证；神经网络部分，鉴于数据量较小，考虑使用简单神经网络
+
+\section{方法(Method)}
+
+\subsection{随机森林和KNN模型的搭建}
+本研究的调参逻辑采用分层交叉验证框架，完成基线模型评估以识别潜在过拟合、欠拟合或类别不平衡问题后，
+为了进一步分析最重要的的指标并减少数据集划分而产生的偏移，
+本研究设计了重复抽样验证策略：通过固定随机种子、执行100次独立的数据集分层划分，
+每次划分均重新计算并记录两种独立算法（随机森林与神经网络）导出的特征权重排序。
+在此基础上，构建累积积分评价体系：对每次划分结果中排名前10位的特征，
+按排名顺序分别赋予10至1分的递减权重（即排名第1得10分，第10名得1分），
+最终通过对100次划分结果的得分进行累加，遴选出累计得分最高的10个核心特征，
+作为最具判别力且稳定性强的关键生物标志物。
+
+
+\subsection{神经网络模型的构建}
+
+本研究基于中医临床数据构建了一个深度神经网络模型，
+用于中医证型的多分类任务。研究从数据预处理开始，
+首先加载包含症状与证型标签的Excel数据，
+进行类别分布分析和可视化；模型架构采用三层全连接神经网络
+（128-64-32个神经元），并集成了L2正则化、批标准化和Dropout
+等强正则化组件以防止过拟合，输出层使用Softmax函数实现多分类。
+训练过程采用五折分层交叉验证确保模型稳健性，通过Adam优化器
+（学习率0.001）和类别权重平衡解决数据不均衡问题，
+并结合早停法、学习率衰减等回调函数优化训练效率。
+模型评估综合了准确率、平衡准确率、加权F1分数、
+Cohen's Kappa系数等多维度指标，
+并通过混淆矩阵和类别性能对比进行可视化分析。
+特征重要性分析采用梯度方法识别各证型的关键症状，
+为中医辨证提供可解释性依据。最终模型保存为可部署格式，
+并封装了预测函数接口，能够输入症状字典输出证型预测及概率分布。
+整个流程强调可复现性与临床实用性，既可作为中医辅助诊断工具，
+也为证候规律研究提供数据驱动的方法支持。
+
+
+
+
+\section{结果(Results)}
+\subsection{数据分析与预处理}
+在259个病例样本数据中，共有78个特征指标，其中面诊指标24个，
+舌诊指标25个，脉诊指标29个；分类指标为中医证型，
+其中包含8个类别，分别是气虚血瘀证，心肾阳虚证，痰浊闭阻证，
+心血瘀阻证，气滞血瘀证，气阴两虚证，心肾阴虚证，寒凝心脉证，
+8种证型占比均在12\%左右，数据数量分布比较均匀。
+
+\FloatBarrier
+\begin{table}[H] % [H]选项可以强制将表格放置在当前位置（需要\usepackage{float}）
+  \centering
+  \smallskip % 在表格上方增加一点间距
+  \begin{tabular}{ccc}
+    \hline
+    \noalign{\smallskip}
+    中医证型 & 样本数量 & 百分比(\%) \\
+    \noalign{\smallskip}
+    \hline
+    \noalign{\smallskip}
+    气虚血瘀证 & 35 & 13.5 \\
+    心肾阳虚证 & 34 & 13.1 \\
+    痰浊闭阻证 & 34 & 13.1 \\
+    心血瘀阻证 & 33 & 12.7 \\
+    气滞血瘀证 & 32 & 12.4 \\
+    气阴两虚证 & 31 & 12.0 \\
+    心肾阴虚证 & 30 & 11.6 \\
+    寒凝心脉证 & 30 & 11.6 \\
+    \noalign{\smallskip}
+    \hline
+  \end{tabular}
+  \caption{中医证型样本分布统计}
+  \label{tab:syndrome-dist}
+\end{table}
+
+本研究通过卡方检验对8种冠心病中医证型与30项临床特征进行关联性分析，
+发现其中10项特征具有极显著的统计学差异（$p_{\text{adj}} < 0.001$）。
+其中，“五心烦热”与“形寒肢冷”的鉴别能力最为突出，卡方值分别为174.44和154.71，Cramer's $V$值分别为0.821和0.773，表明二者与证型之间存在强关联，可作为区分阴虚证型与阳虚证型的关键指标。此外，舌象特征如“腻苔”（$V=0.511$）、“涩脉”（$V=0.496$）及“舌色红”（$V=0.442$）亦表现出中等程度的鉴别价值，提示舌诊在证型辨别中具有重要作用。症状方面，“瘀点瘀斑”（$V=0.468$）、“乏力”（$V=0.440$）等特征虽效应量稍弱，但仍能提供一定的辨证参考。以上结果经Benjamini-Hochberg多重检验校正后仍保持显著，说明本研究的发现具有较好的统计可靠性。
+
+\FloatBarrier
+\begin{table}[H]
+  \centering
+  \smallskip
+  \begin{tabular}{cccccc}
+    \hline
+    \noalign{\smallskip}
+    排名 & 特征 & 卡方值 & $p$值 & $p_{\text{adj}}$ & Cramer's V \\
+    \noalign{\smallskip}
+    \hline
+    \noalign{\smallskip}
+    1 & 五心烦热 & 174.4441 & $2.90 \times 10^{-34}$ & $1.77 \times 10^{-32}$ & 0.8207 \\
+    2 & 形寒肢冷 & 154.7093 & $4.16 \times 10^{-30}$ & $1.27 \times 10^{-28}$ & 0.7729 \\
+    3 & 腻苔 & 67.5523 & $4.61 \times 10^{-12}$ & $9.37 \times 10^{-11}$ & 0.5107 \\
+    4 & 涩 & 63.7917 & $2.63 \times 10^{-11}$ & $4.01 \times 10^{-10}$ & 0.4963 \\
+    5 & 瘀点瘀斑 & 56.6626 & $6.98 \times 10^{-10}$ & $7.09 \times 10^{-9}$ & 0.4677 \\
+    6 & 细 & 56.6827 & $6.91 \times 10^{-10}$ & $7.09 \times 10^{-9}$ & 0.4678 \\
+    7 & 数 & 54.2367 & $2.11 \times 10^{-9}$ & $1.84 \times 10^{-8}$ & 0.4576 \\
+    8 & 舌色红 & 50.7076 & $1.05 \times 10^{-8}$ & $8.00 \times 10^{-8}$ & 0.4425 \\
+    9 & 乏力 & 50.0352 & $1.42 \times 10^{-8}$ & $9.64 \times 10^{-8}$ & 0.4395 \\
+    10 & 紧 & 46.6683 & $6.48 \times 10^{-8}$ & $3.95 \times 10^{-7}$ & 0.4245 \\
+    \noalign{\smallskip}
+    \hline
+  \end{tabular}
+  \caption{各特征在8种中医证型间的卡方检验结果（前10项）}
+  \label{tab:chi-square-results}
+\end{table}
+
+\subsection{随机森林与神经网络模型的结果}
+
+基于本研究构建的随机森林与神经网络交叉验证框架，
+对259例包含八种中医证候（寒凝心脉证、心肾阳虚证、心肾阴虚证、
+心血瘀阻证、气滞血瘀证、气虚血瘀证、气阴两虚证、痰浊闭阻证）
+的样本数据进行100次分层随机划分与特征重要性分析，
+结果显示各基线模型的加权F1分数分别为随机森林0.4830±0.0180、
+决策树0.3777±0.0163、神经网络0.4244±0.0405、
+支持向量机0.4269±0.0568、K近邻0.3852±0.0428，
+整体分类性能中等且存在一定过拟合风险与维度灾难可能。
+
+\begin{table}[H]
+  \centering
+  \smallskip
+  \begin{tabular}{ccc}
+    \hline
+    \noalign{\smallskip}
+    模型名称 & 加权F1分数（均值±标准差） & 性能评价 \\
+    \noalign{\smallskip}
+    \hline
+    \noalign{\smallskip}
+    随机森林 & 0.4830 ± 0.0180 & 最佳性能 \\
+    支持向量机 & 0.4269 ± 0.0568 & 次优性能，波动较大 \\
+    神经网络 & 0.4244 ± 0.0405 & 中等性能 \\
+    K近邻 & 0.3852 ± 0.0428 & 性能一般 \\
+    决策树 & 0.3777 ± 0.0163 & 性能最低 \\
+    \noalign{\smallskip}
+    \hline
+  \end{tabular}
+  \caption{五种模型的验证性能比较}
+  \label{tab:baseline-performance}
+\end{table}
+
+经累计积分评价体系筛选，获得总得分排名前十的关键辨证指标依次为形寒肢冷（1961分）、
+五心烦热（1740分）、乏力（1395分）、腻苔（868分）、涩脉（755分）、细脉（722分）、
+心悸失眠（558分）、气短懒言（427分）、舌色暗红（388分）及胸闷心慌（266分）
+
+\begin{table}[H]
+  \centering
+  \smallskip
+  \begin{tabular}{cccc}
+    \hline
+    \noalign{\smallskip}
+    排名 & 特征名称 & 总得分 & 算法贡献（RF/ANN） \\
+    \noalign{\smallskip}
+    \hline
+    \noalign{\smallskip}
+    1 & 形寒肢冷 & 1961 & 1000/961 \\
+    2 & 五心烦热 & 1740 & 839/901 \\
+    3 & 乏力 & 1395 & 832/563 \\
+    4 & 腻苔 & 868 & 658/210 \\
+    5 & 涩 & 755 & 235/520 \\
+    6 & 细 & 722 & 565/157 \\
+    7 & 心悸失眠 & 558 & 418/140 \\
+    8 & 气短懒言 & 427 & 367/60 \\
+    9 & 舌色暗红 & 388 & 0/388 \\
+    10 & 胸闷心慌 & 266 & 0/266 \\
+    \noalign{\smallskip}
+    \hline
+  \end{tabular}
+  \caption{特征重要性累计得分排名（前10项）}
+  \label{tab:feature-importance-scores}
+\end{table}
+
+其中前五项特征在两种算法中均呈现高度一致的判别重要性；进一步通过特征子集验证发现，
+仅使用形寒肢冷、五心烦热、乏力、腻苔、涩脉这五个核心指标即可达到最佳分类性能
+（加权F1=0.4870±0.0535），而增加更多特征并未显著提升模型判别力，
+说明这五项临床表征构成了八种证候分类最具稳定性与代表性的微观指标集合，
+为中医辨证的客观化与标准化提供了可量化的特征依据。
+
+\begin{table}[H]
+  \centering
+  \smallskip
+  \begin{tabular}{ccc}
+    \hline
+    \noalign{\smallskip}
+    特征数量 & 加权F1分数（均值±标准差） & 特征组合 \\
+    \noalign{\smallskip}
+    \hline
+    \noalign{\smallskip}
+    5 & 0.4870 ± 0.0535 & 形寒肢冷、五心烦热、乏力、腻苔、涩 \\
+    10 & 0.4264 ± 0.0537 & 增加细、心悸失眠、气短懒言、舌色暗红、胸闷心慌 \\
+    15 & 0.4682 ± 0.0443 & - \\
+    20 & 0.4546 ± 0.0389 & - \\
+    30 & 0.4569 ± 0.0525 & - \\
+    \noalign{\smallskip}
+    \hline
+  \end{tabular}
+  \caption{不同规模特征的性能比较}
+  \label{tab:feature-subset-validation}
+\end{table}
+
+
+\section{讨论(Discussion)}
+
+
+
+  文献引用：正如Hinton在文\cite{lecun2015deep}\cite{xu2015show}中所述。。。
+\textbf{注意,文献的引用需要新建 filename.bib 文件，将文献对应的bitex格式的引用复制粘贴到文件中然后再引用！}
+谷歌学术或微软学术均可生成文献引用可用的Bibtex格式。
+
+
+
+\FloatBarrier % 在不想被浮动的表格/图片 越过的部分前加 \FloatBarrier
+
+\bibliography{refs}
+\bibliographystyle{plain}
+
+
+\end{document}

@@ -1,0 +1,314 @@
+\documentclass[UTF8,12pt]{article} % 12pt 为字号大小
+\usepackage{amssymb,amsfonts,amsmath,amsthm}
+\usepackage{times}
+\usepackage{graphicx} % 插图
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{placeins} % 防止浮动
+%----------
+% 插入代码的格式定义
+% 参考 https://www.latexstudio.net/archives/5900.html
+%----------
+\usepackage{listings}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=none,                                          % 不显示背景边框
+ backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+%----------
+% 算法伪代码
+% https://blog.csdn.net/lwb102063/article/details/53046265
+%----------
+\usepackage{algorithm}  
+\usepackage{algpseudocode}  
+\usepackage{amsmath}  
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}  % Use Input in the format of Algorithm  
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm  
+
+%----------
+% 字体定义
+%----------
+\setCJKmainfont[
+    BoldFont = {Noto Sans CJK SC Bold},
+    ItalicFont = {AR PL UKai CN}
+]{Noto Serif CJK SC}
+
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}  % 宋体
+\setCJKfamilyfont{zhhei}{Noto Sans CJK SC}    % 黑体
+\setCJKfamilyfont{zhkai}{AR PL UKai CN}      % 楷体
+\setCJKfamilyfont{zhfs}{AR PL UMing CN}      % 仿宋（明体替代）
+\setCJKfamilyfont{zhli}{Noto Sans CJK SC}    % 隶书（黑体替代）
+\setCJKfamilyfont{zhyou}{Noto Sans CJK SC}   % 圆体（黑体替代）
+
+\newcommand*{\songti}{\CJKfamily{zhsong}} % 宋体
+\newcommand*{\heiti}{\CJKfamily{zhhei}}   % 黑体
+\newcommand*{\kaiti}{\CJKfamily{zhkai}}  % 楷体
+\newcommand*{\fangsong}{\CJKfamily{zhfs}} % 仿宋
+\newcommand*{\lishu}{\CJKfamily{zhli}}    % 隶书
+\newcommand*{\yuanti}{\CJKfamily{zhyou}} % 圆体
+
+%----------
+% 版面设置
+%----------
+%首段缩进
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+%行距
+\renewcommand{\baselinestretch}{1.25} % 1.25倍行距
+%页边距
+\usepackage[a4paper]{geometry}
+\geometry{verbose,
+  tmargin=2cm,% 上边距
+  bmargin=2cm,% 下边距
+  lmargin=2cm,% 左边距
+  rmargin=2cm % 右边距
+}
+
+% ----------
+% 多级标题格式在此设置
+% https://zhuanlan.zhihu.com/p/32712209
+% \titleformat{command}[shape]%定义标题类型和标题样式，字体
+% {format}%定义标题格式:字号（大小），加粗，斜体
+% {label}%定义标题的标签，即标题的标号等
+% {sep}%定义标题和标号之间的水平距离
+% {before-code}%定义标题前的内容
+% [after-code]%定义标题后的内容
+% ----------
+\usepackage{titlesec} %自定义多级标题格式的宏包
+% 三级标题
+% 4
+\titleformat{\section}[block]{\large \bfseries}{\arabic{section}}{1em}{}[]
+% 4.1
+\titleformat{\subsection}[block]{\normalsize \bfseries}{\arabic{section}.\arabic{subsection}}{1em}{}[]
+% 4.1.1
+\titleformat{\subsubsection}[block]{\small \mdseries}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}{1em}{}[]
+\titleformat{\paragraph}[block]{\footnotesize \bfseries}{[\arabic{paragraph}]}{1em}{}[]
+
+
+%----------
+% 其他宏包
+%----------
+%图形相关
+\usepackage[x11names]{xcolor} % must before tikz, x11names defines RoyalBlue3
+\usepackage{graphicx}
+\usepackage{pstricks,pst-plot,pst-eps}
+\usepackage{subfig}
+\def\pgfsysdriver{pgfsys-dvipdfmx.def} % put before tikz
+\usepackage{tikz}
+
+%原文照排
+\usepackage{verbatim}
+
+%链接的格式
+\usepackage[colorlinks,linkcolor=red]{hyperref}
+%表格
+\usepackage{tabularx}
+
+%==========
+% 正文部分
+%==========
+
+\begin{document}
+
+% \kaiti 是楷体，参见上面的字体设置
+\title{\bf{\kaiti 中医证型分类模型的构建}}
+\author{姓名:胡屹莹\hspace{1cm}时间:2026.1.29}
+\date{}
+\maketitle
+
+\abstract{
+本研究基于259个病例样本数据及提取的78个特征数据，
+包括舌诊（苔质，舌色等）/脉诊（平，浮，洪等）/问诊
+（呕吐痰涎，脘腹痞满）等，进行中医证型分类模型的构建。
+}
+\paragraph{\bf{ \kaiti 关键词：中医辨证，机器学习，}}
+\paragraph{\\}
+
+\section{介绍(Introduction)}
+\subsection{背景(Background)}
+  心肾阳虚证
+
+\subsection{任务(Main Task)}
+在259个病例样本数据中，使用随机森林和KNN算法建模，
+并在五折交叉验证后，进行优化调参；
+
+\section{方法(Method)}
+
+\subsection{数据分析与预处理}
+在259个病例样本数据中，共有78个特征指标，其中面诊指标24个，舌诊指标25个，脉诊指标29个；分类指标为中医证型，其中包含8个类别，分别是气虚血瘀证，心肾阳虚证，痰浊闭阻证，心血瘀阻证，气滞血瘀证，气阴两虚证，心肾阴虚证，寒凝心脉证，8种证型占比均在12\%左右，数据数量分布比较均匀。
+
+\noindent
+\begin{table}[H] % [H]选项可以强制将表格放置在当前位置（需要\usepackage{float}）
+  \centering
+  \smallskip % 在表格上方增加一点间距
+  \begin{tabular}{ccc}
+    \hline
+    \noalign{\smallskip}
+    中医证型 & 样本数量 & 百分比(\%) \\
+    \noalign{\smallskip}
+    \hline
+    \noalign{\smallskip}
+    气虚血瘀证 & 35 & 13.5 \\
+    心肾阳虚证 & 34 & 13.1 \\
+    痰浊闭阻证 & 34 & 13.1 \\
+    心血瘀阻证 & 33 & 12.7 \\
+    气滞血瘀证 & 32 & 12.4 \\
+    气阴两虚证 & 31 & 12.0 \\
+    心肾阴虚证 & 30 & 11.6 \\
+    寒凝心脉证 & 30 & 11.6 \\
+    \noalign{\smallskip}
+    \hline
+  \end{tabular}
+  \caption{中医证型样本分布统计}
+  \label{tab:syndrome-dist}
+\end{table}
+
+本研究通过卡方检验对8种冠心病中医证型与30项临床特征进行关联性分析，发现其中10项特征具有极显著的统计学差异（$p_{\text{adj}} < 0.001$）。其中，“五心烦热”与“形寒肢冷”的鉴别能力最为突出，卡方值分别为174.44和154.71，Cramer's $V$值分别为0.821和0.773，表明二者与证型之间存在强关联，可作为区分阴虚证型与阳虚证型的关键指标。此外，舌象特征如“腻苔”（$V=0.511$）、“涩脉”（$V=0.496$）及“舌色红”（$V=0.442$）亦表现出中等程度的鉴别价值，提示舌诊在证型辨别中具有重要作用。症状方面，“瘀点瘀斑”（$V=0.468$）、“乏力”（$V=0.440$）等特征虽效应量稍弱，但仍能提供一定的辨证参考。以上结果经Benjamini-Hochberg多重检验校正后仍保持显著，说明本研究的发现具有较好的统计可靠性。
+
+\noindent
+\begin{table}[H]
+  \centering
+  \smallskip
+  \begin{tabular}{cccccc}
+    \hline
+    \noalign{\smallskip}
+    排名 & 特征 & 卡方值 & $p$值 & $p_{\text{adj}}$ & Cramer's V \\
+    \noalign{\smallskip}
+    \hline
+    \noalign{\smallskip}
+    1 & 五心烦热 & 174.4441 & $2.90 \times 10^{-34}$ & $1.77 \times 10^{-32}$ & 0.8207 \\
+    2 & 形寒肢冷 & 154.7093 & $4.16 \times 10^{-30}$ & $1.27 \times 10^{-28}$ & 0.7729 \\
+    3 & 腻苔 & 67.5523 & $4.61 \times 10^{-12}$ & $9.37 \times 10^{-11}$ & 0.5107 \\
+    4 & 涩 & 63.7917 & $2.63 \times 10^{-11}$ & $4.01 \times 10^{-10}$ & 0.4963 \\
+    5 & 瘀点瘀斑 & 56.6626 & $6.98 \times 10^{-10}$ & $7.09 \times 10^{-9}$ & 0.4677 \\
+    6 & 细 & 56.6827 & $6.91 \times 10^{-10}$ & $7.09 \times 10^{-9}$ & 0.4678 \\
+    7 & 数 & 54.2367 & $2.11 \times 10^{-9}$ & $1.84 \times 10^{-8}$ & 0.4576 \\
+    8 & 舌色红 & 50.7076 & $1.05 \times 10^{-8}$ & $8.00 \times 10^{-8}$ & 0.4425 \\
+    9 & 乏力 & 50.0352 & $1.42 \times 10^{-8}$ & $9.64 \times 10^{-8}$ & 0.4395 \\
+    10 & 紧 & 46.6683 & $6.48 \times 10^{-8}$ & $3.95 \times 10^{-7}$ & 0.4245 \\
+    \noalign{\smallskip}
+    \hline
+  \end{tabular}
+  \caption{各特征在8种中医证型间的卡方检验结果（前10项）}
+  \label{tab:chi-square-results}
+\end{table}
+
+\subsection{随机森林和KNN模型的搭建}
+本研究的调参逻辑采用分层交叉验证框架，通过基线评估确定模型潜力后，
+针对二值特征为主的医学数据特性，为随机森林设计参数随机搜索策略，
+为KNN设计网格搜索策略，并结合动态参数约束机制防止过拟合，
+最终基于交叉验证准确率选择最优参数组合。
+
+
+\subsection{神经网络模型的构建}
+
+
+
+\section{结果(Results)}
+
+
+
+\section{讨论(Discussion)}
+
+
+
+
+
+
+
+
+
+\section{引用}
+\subsection{图片引用}
+图片引用：如图 \ref{fig:enc-dec} 所示，图中。。。\textbf{引用对应的label，注意图片的路径即可。}
+\textbf{latex会根据页面的篇幅自动调整图片的位置}。
+如果不想浮动的图片或表格越过某些部分，在该部分前加\textbf{$\backslash$FloatBarrier}表明该部分不想被越过。
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=1.2]{figs/pic.png}
+  \caption{Encoder-decoder结构}
+  \label{fig:enc-dec}
+\end{figure}
+
+
+
+  文献引用：正如Hinton在文\cite{lecun2015deep}\cite{xu2015show}中所述。。。
+\textbf{注意,文献的引用需要新建 filename.bib 文件，将文献对应的bitex格式的引用复制粘贴到文件中然后再引用！}
+谷歌学术或微软学术均可生成文献引用可用的Bibtex格式。
+
+\section{其他}
+\subsection{公式}
+公式等号对齐：
+\begin{align}
+  f_{att}(c_i, h_i) &= \boldsymbol{v_a}tanh(\boldsymbol{W_ac_i},\boldsymbol{W_bh_i})\\
+  \alpha_i &= f_{att}(\boldsymbol{c_i}, \boldsymbol{h_i})\\
+  \boldsymbol{s} &= softmax(\boldsymbol{\alpha})\\
+  \boldsymbol{z} &= \sum{s_i\boldsymbol{c_i}}  
+\end{align}
+
+  其中 $\boldsymbol{c_i}$表示。。。
+
+\subsection{代码与伪代码}
+{\setmainfont{Courier New Bold} % 设置代码字体      
+  % 代码段             
+  \begin{lstlisting}
+  #include <iostream>
+  int main()
+  {
+      std::cout << "Hello, World!" << std::endl;
+  }  
+  \end{lstlisting}
+                  
+  \begin{lstlisting}
+  #include <iostream>
+  int main()
+  {
+      constexpr int MAX = 100;
+  }  
+  \end{lstlisting}
+}
+
+% 来自 https://blog.csdn.net/lwb102063/article/details/53046265
+\makeatletter  
+\def\BState{\State\hskip-\ALG@thistlm}  
+\makeatother  
+\begin{algorithm}  
+\caption{My algorithm}\label{euclid}  
+\begin{algorithmic}[1]  
+\Procedure{MyProcedure}{}  
+\State $\textit{stringlen} \gets \text{length of }\textit{string}$  
+\State $i \gets \textit{patlen}$  
+\BState \emph{top}:  
+\If {$i > \textit{stringlen}$} \Return false  
+\EndIf  
+\State $j \gets \textit{patlen}$  
+\BState \emph{loop}:  
+\If {$\textit{string}(i) = \textit{path}(j)$}  
+\State $j \gets j-1$.  
+\State $i \gets i-1$.  
+\State \textbf{goto} \emph{loop}.  
+\State \textbf{close};  
+\EndIf  
+\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.  
+\State \textbf{goto} \emph{top}.  
+\EndProcedure  
+\end{algorithmic}  
+\end{algorithm}  
+
+
+\FloatBarrier % 在不想被浮动的表格/图片 越过的部分前加 \FloatBarrier
+
+\bibliography{refs}
+\bibliographystyle{plain}
+
+
+\end{document}
